@@ -29,3 +29,5 @@ Carthage/Build/
 
 # --- CocoaPods ---
 Pods/
+
+.gitignore
