@@ -1,0 +1,31 @@
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- Xcode ---
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.playground.xcworkspace
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+!default.pbxuser
+
+# --- Xcode User Settings ---
+# 個人設定（ウィンドウ配置や開いているファイルなど）を除外
+xcuserdata/
+
+# --- Swift Package Manager ---
+.build/
+.swiftpm/
+/Packages
+/Package.resolved
+
+# --- Carthage ---
+Carthage/Build/
+
+# --- CocoaPods ---
+Pods/
