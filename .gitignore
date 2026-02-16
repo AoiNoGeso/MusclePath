@@ -15,7 +15,6 @@ DerivedData/
 !default.pbxuser
 
 # --- Xcode User Settings ---
-# 個人設定（ウィンドウ配置や開いているファイルなど）を除外
 xcuserdata/
 
 # --- Swift Package Manager ---
@@ -29,5 +28,3 @@ Carthage/Build/
 
 # --- CocoaPods ---
 Pods/
-
-.gitignore

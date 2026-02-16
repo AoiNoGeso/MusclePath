@@ -27,11 +27,9 @@ struct WorkoutView: View {
     
     var body: some View {
         ZStack {
-            // 1．ヘッダーレイヤー（XP表示）
             headerLayer
                 .zIndex(2)
 
-            // 2．メインコンテンツレイヤー
             if !isStarted {
                 preWorkoutView()
                     .transition(.opacity)
@@ -43,7 +41,6 @@ struct WorkoutView: View {
         .animation(.default, value: isStarted)
     }
     
-    // --- ヘルパービュー ---
 
     private var headerLayer: some View {
         VStack {
@@ -122,7 +119,7 @@ struct WorkoutView: View {
             }
             .padding(.top, 100)
             
-            // 中央：3Dモデル用ウィンドウ（デモ）
+            // 3Dモデル用ウィンドウ（デモ）
             ZStack {
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color.gray.opacity(0.1))
@@ -145,7 +142,7 @@ struct WorkoutView: View {
             
             Spacer()
             
-            // 下部：スタートボタン
+            // スタートボタン
             Button(action: {
                 withAnimation {
                     startDate = Date()
@@ -166,8 +163,7 @@ struct WorkoutView: View {
         }
     }
 
-    // --- 既存のパーツ ---
-    
+    // XP獲得時のアニメーション
     private func triggerXPJump() {
         DispatchQueue.main.async {
             guard !hasAddedXP else { return }
