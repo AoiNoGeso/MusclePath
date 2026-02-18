@@ -1,22 +1,24 @@
 import SwiftUI
 
+// トレーニングデータの構造体
 struct Training: Identifiable, Codable {
-    let id: Int
-    let title: String
-    let category: [String]
+    let id: Int // 種目のID
+    let title: String // 種目名
+    let category: [String] // 部位別カテゴリのリスト
 }
 
+// Workout View
 struct WorkoutView: View {
-    let training: Training // JSONから読み込んだデータを受け取る
-    let timerDuration: TimeInterval
-    let earnedXP: Int
+    let training: Training // トレーニングデータ
+    let timerDuration: TimeInterval // タイマーの時間 [秒]
+    let earnedXP: Int // トレーニングで獲得するXP
     
-    @State private var currentXP: Int
-    @State private var hasAddedXP = false
-    @State private var xpOffset: CGFloat = 0
-    @State private var xpScale: CGFloat = 1.0
-    @State private var startDate = Date()
-    @State private var isStarted = false
+    @State private var currentXP: Int // 現在のXP
+    @State private var hasAddedXP = false // XPアニメーション用のフラグ
+    @State private var xpOffset: CGFloat = 0 // XPアニメーションのオフセット
+    @State private var xpScale: CGFloat = 1.0 // XPアニメーションのスケール
+    @State private var startDate = Date() // タイマー開始時間
+    @State private var isStarted = false // トレーニング開始フラグ
     
     init(training: Training, timerDuration: TimeInterval, currentXP: Int, earnedXP: Int) {
         self.training = training
@@ -25,23 +27,27 @@ struct WorkoutView: View {
         _currentXP = State(initialValue: currentXP)
     }
     
+    // main View
     var body: some View {
         ZStack {
+            // ヘッダー
             headerLayer
                 .zIndex(2)
 
-            if !isStarted {
+            // 準備画面
+            if !isStarted { 
                 preWorkoutView()
                     .transition(.opacity)
-            } else {
+            } 
+            // タイマー画面
+            else {
                 timerLayer
-                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
             }
         }
         .animation(.default, value: isStarted)
     }
     
-
+    // ヘッダー
     private var headerLayer: some View {
         VStack {
             HStack {
@@ -68,7 +74,8 @@ struct WorkoutView: View {
             Spacer()
         }
     }
-
+    
+    // タイマー
     private var timerLayer: some View {
         TimelineView(.animation) { context in
             let elapsed = context.date.timeIntervalSince(startDate)
@@ -96,7 +103,7 @@ struct WorkoutView: View {
         }
     }
     
-    // --- 待機画面のパーツ ---
+    // 　
     private func preWorkoutView() -> some View {
         VStack(spacing: 20) {
             VStack(spacing: 12) {
@@ -181,7 +188,8 @@ struct WorkoutView: View {
             }
         }
     }
-
+    
+    // フィードバックボタンのレイヤー (限界，普通，余裕)
     private func feedbackButtonsView() -> some View {
         VStack(spacing: 12) {
             feedbackButton(label: "限界", color: .red) { onFeedback("hard") }
@@ -191,7 +199,8 @@ struct WorkoutView: View {
         .padding(.horizontal, 40)
         .padding(.bottom, 20)
     }
-
+    
+    // フィードバックボタンのView
     private func feedbackButton(label: String, color: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(label)
@@ -204,10 +213,14 @@ struct WorkoutView: View {
                 .shadow(color: color.opacity(0.3), radius: 10, y: 5)
         }
     }
-
+    
+    // バツを押された時
     private func onCancel() { print("canceled") }
+    
+    // フィードバック後
     private func onFeedback(_ level: String) { print("Feedback: \(level)") }
     
+    // タイマーのビュー
     private func timerContents(for date: Date, progress: Double) -> some View {
         let elapsed = date.timeIntervalSince(startDate)
         let remaining = max(timerDuration - elapsed, 0)
@@ -234,7 +247,7 @@ struct WorkoutView: View {
     }
 }
 
-// --- プレビュー用のモックデータ ---
+// プレビュー
 #Preview {
     let mockTraining = Training(
         id: 2002,
